@@ -416,6 +416,10 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
         Data Kelas
       </a>
+      <a data-view="mapel">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V4.5A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20"/></svg>
+        Mata Pelajaran
+      </a>
     </nav>
     <div class="sidebar-foot">
       Musyrif: <b>Arif</b><br>
@@ -432,7 +436,7 @@
       </div>
       <span class="pill-role">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.2 6.6H21l-5.4 4 2 6.6L12 15l-5.6 4.2 2-6.6L3 8.6h6.8z"/></svg>
-        7 Mata Pelajaran
+        <span id="statMapelPill">0</span> Mata Pelajaran
       </span>
     </div>
 
@@ -660,6 +664,33 @@
         </div>
       </div>
 
+      <!-- ============ DATA MATA PELAJARAN ============ -->
+      <div class="view" id="view-mapel">
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Tambah Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field" style="min-width:280px;">
+                <label>Nama Mata Pelajaran</label>
+                <input type="text" id="mapelNamaInput" placeholder="cth. Matematika, Fikih, Produktif TKJ">
+              </div>
+              <div class="field"><label>&nbsp;</label><button class="btn btn-primary" onclick="tambahMapel()">Tambah Mata Pelajaran</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Daftar Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <ul class="list-simple" id="mapelListEl"></ul>
+            <div class="empty-state" id="mapelEmpty">
+              <div class="t">Belum ada mata pelajaran</div>
+              Tambahkan mata pelajaran terlebih dahulu sebelum mengambil absensi.
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <footer class="site-footer">
@@ -700,7 +731,8 @@ const LS_FORCE_LOCAL = 'ais_absensi_force_local'; // true if user explicitly cho
 const DEFAULT_SUPABASE_URL = 'https://dexsuchczwlqoxtftduo.supabase.co';
 const DEFAULT_SUPABASE_KEY = 'sb_publishable_RtiemtREOWAIk6yDzcqeYg_uY33O4S6';
 
-const MAPEL = [
+const LS_MAPEL = 'ais_absensi_mapel';
+const DEFAULT_MAPEL = [
   { id:'bisdig', nama:'Bisnis Digital' },
   { id:'rpl', nama:'Rekayasa Perangkat Lunak (RPL)' },
   { id:'keperawatan', nama:'Keperawatan' },
@@ -709,6 +741,7 @@ const MAPEL = [
   { id:'arab', nama:'Bahasa Arab' },
   { id:'qurdis', nama:"Qur'an Hadits (Qurdis)" },
 ];
+let MAPEL = [];
 
 const STATUS_LIST = ['Hadir','Sakit','Izin','Alpa'];
 const STATUS_COLORS = { Hadir:'var(--emerald)', Sakit:'var(--blue)', Izin:'var(--gold)', Alpa:'var(--red)' };
@@ -805,6 +838,15 @@ function disconnectSupabase(){
 }
 
 /* ================= DATA FETCHING ================= */
+async function fetchMapel(){
+  if(cloudMode){
+    const { data, error } = await sb.from('mapel').select('*').order('nama');
+    if(error){ toast('Gagal memuat mata pelajaran: '+error.message, true); return MAPEL; }
+    return data.map(m=>({ id:m.id, nama:m.nama }));
+  }
+  const saved = loadLS(LS_MAPEL, null);
+  return saved || DEFAULT_MAPEL;
+}
 async function fetchKelas(){
   if(cloudMode){
     const { data, error } = await sb.from('kelas').select('*').order('nama');
@@ -833,7 +875,7 @@ async function fetchRecords(){
 }
 
 async function loadAllData(){
-  [kelasList, siswaMap, records] = await Promise.all([fetchKelas(), fetchSiswa(), fetchRecords()]);
+  [MAPEL, kelasList, siswaMap, records] = await Promise.all([fetchMapel(), fetchKelas(), fetchSiswa(), fetchRecords()]);
   refreshCurrentView();
 }
 
@@ -847,6 +889,7 @@ function refreshCurrentView(){
   if(view==='rekap') renderRekap();
   if(view==='siswa') renderSiswaList();
   if(view==='kelas') renderKelasList();
+  if(view==='mapel') renderMapelList();
 }
 
 /* ================= NAV ================= */
@@ -858,7 +901,7 @@ document.getElementById('navlist').addEventListener('click', async (e)=>{
   const view = a.dataset.view;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
-  const titles = { dashboard:'Dashboard', absensi:'Ambil Absensi', rekap:'Rekap & Ekspor', siswa:'Data Siswa', kelas:'Data Kelas' };
+  const titles = { dashboard:'Dashboard', absensi:'Ambil Absensi', rekap:'Rekap & Ekspor', siswa:'Data Siswa', kelas:'Data Kelas', mapel:'Data Mata Pelajaran' };
   document.getElementById('pageTitle').textContent = titles[view];
   if(cloudMode){ await loadAllData(); } else { refreshCurrentView(); }
 });
@@ -908,6 +951,7 @@ function mapelName(id){ const m = MAPEL.find(x=>x.id===id); return m ? m.nama : 
 function kelasName(id){ const k = kelasList.find(x=>x.id===id); return k ? k.nama : id; }
 
 function renderDashboard(){
+  document.getElementById('statMapelPill').textContent = MAPEL.length;
   document.getElementById('statKelas').textContent = kelasList.length;
   const totalSiswa = Object.values(siswaMap).reduce((a,arr)=>a+arr.length,0);
   document.getElementById('statSiswa').textContent = totalSiswa;
@@ -1225,6 +1269,55 @@ async function hapusKelas(kelasId){
   populateKelasSelects();
   populateFilterSelects();
   toast('Kelas dihapus.');
+}
+
+/* ================= DATA MATA PELAJARAN ================= */
+function renderMapelList(){
+  const ul = document.getElementById('mapelListEl');
+  const emptyEl = document.getElementById('mapelEmpty');
+  if(MAPEL.length===0){ ul.innerHTML=''; emptyEl.style.display='block'; return; }
+  emptyEl.style.display='none';
+  ul.innerHTML = MAPEL.map(m=>{
+    const count = records.filter(r=>r.mapelId===m.id).length;
+    return `<li>
+      <span>${m.nama} <span style="color:var(--muted);font-size:12px;">(${count} catatan absensi)</span></span>
+      <span class="li-actions"><button class="btn btn-danger-outline btn-sm" onclick="hapusMapel('${m.id}')">Hapus</button></span>
+    </li>`;
+  }).join('');
+}
+
+async function tambahMapel(){
+  const nama = document.getElementById('mapelNamaInput').value.trim();
+  if(!nama){ toast('Nama mata pelajaran wajib diisi.', true); return; }
+  const newMapel = { id: uid('mapel'), nama };
+
+  if(cloudMode){
+    const { error } = await sb.from('mapel').insert({ id:newMapel.id, nama:newMapel.nama });
+    if(error){ toast('Gagal menambah mata pelajaran: '+error.message, true); return; }
+  }
+  MAPEL.push(newMapel);
+  if(!cloudMode) saveLS(LS_MAPEL, MAPEL);
+  document.getElementById('mapelNamaInput').value='';
+  renderMapelList();
+  populateMapelSelects();
+  populateFilterSelects();
+  renderDashboard();
+  toast('Mata pelajaran ditambahkan ✓');
+}
+
+async function hapusMapel(mapelId){
+  if(!confirm('Menghapus mata pelajaran tidak akan menghapus riwayat absensi yang sudah tercatat. Lanjutkan?')) return;
+  if(cloudMode){
+    const { error } = await sb.from('mapel').delete().eq('id', mapelId);
+    if(error){ toast('Gagal menghapus mata pelajaran: '+error.message, true); return; }
+  }
+  MAPEL = MAPEL.filter(m=>m.id!==mapelId);
+  if(!cloudMode) saveLS(LS_MAPEL, MAPEL);
+  renderMapelList();
+  populateMapelSelects();
+  populateFilterSelects();
+  renderDashboard();
+  toast('Mata pelajaran dihapus.');
 }
 
 /* ================= INIT ================= */
