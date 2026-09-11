@@ -416,6 +416,70 @@
   .role-pill.guru{background:var(--blue-soft);color:var(--blue);}
   .role-pill.siswa{background:var(--emerald-soft);color:var(--emerald);}
 
+  /* ---------- DESKTOP APP SHELL (sidebar + topbar) ---------- */
+  .desktop-shell{display:flex;min-height:100vh;align-items:stretch;background:var(--cream);}
+
+  .sidebar{
+    width:240px;flex-shrink:0;
+    background:linear-gradient(190deg,var(--navy) 0%,var(--navy-deep) 100%);
+    color:#fff;display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+    border-right:1px solid rgba(230,204,126,0.18);
+  }
+  .sidebar-brand{
+    display:flex;align-items:center;gap:10px;padding:20px 18px 16px;
+    border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;
+  }
+  .sidebar-brand svg{flex-shrink:0;}
+  .sidebar-brand .name{font-family:'Lora',serif;font-weight:700;font-size:15px;color:#fff;line-height:1.2;}
+  .sidebar-brand .sub{font-size:9.5px;color:var(--gold-light);letter-spacing:.09em;text-transform:uppercase;margin-top:2px;}
+
+  .sidebar nav.navlist{display:flex;flex-direction:column;gap:2px;padding:14px 12px;flex:1;}
+  .sidebar nav.navlist a{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border-radius:9px;
+    color:rgba(255,255,255,0.68);text-decoration:none;
+    font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+    transition:background .15s, color .15s;
+  }
+  .sidebar nav.navlist a svg{opacity:.85;flex-shrink:0;}
+  .sidebar nav.navlist a:hover{background:rgba(255,255,255,0.07);color:#fff;}
+  .sidebar nav.navlist a.active{background:rgba(230,204,126,0.18);color:var(--gold-light);}
+  .sidebar-divider{height:1px;background:rgba(255,255,255,0.08);margin:4px 18px;}
+
+  .sidebar-footer{
+    padding:14px 16px 18px;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;
+  }
+  .sidebar-footer .user-chip{justify-content:space-between;width:100%;}
+  .sidebar-footer .u-info{text-align:left;}
+  .sidebar-footer .conn-badge{width:100%;justify-content:center;margin-top:10px;}
+
+  .main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    position:sticky;top:0;z-index:15;background:rgba(248,244,232,0.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .topbar .tb-eyebrow{
+    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;
+    display:flex;align-items:center;gap:6px;margin-bottom:4px;
+  }
+  .topbar h1{font-size:21px;margin:0;color:var(--navy);}
+  .topbar .today{font-size:12px;color:var(--muted);margin-top:3px;}
+
+  .desktop-shell .content{padding:26px 32px 40px;}
+  .desktop-shell .site-footer{max-width:none;}
+
+  @media (max-width:900px){
+    .desktop-shell{flex-direction:column;}
+    .sidebar{position:relative;height:auto;width:100%;flex-direction:row;align-items:center;overflow-x:auto;overflow-y:hidden;}
+    .sidebar-brand{border-bottom:none;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+    .sidebar nav.navlist{flex-direction:row;padding:10px;overflow-x:auto;}
+    .sidebar-footer{display:none;}
+    .topbar{padding:14px 18px;}
+    .desktop-shell .content{padding:18px 16px 34px;}
+  }
+
   @media print{
     body *{visibility:hidden;}
     #printArea, #printArea *{visibility:visible;}
@@ -466,21 +530,22 @@
 <!-- ================= APP SHELL ================= -->
 <div id="appShell" style="display:none;">
 
-<!-- ================= NAVBAR ================= -->
-<header class="site-header">
-  <div class="nav-inner">
-    <div class="brand">
-      <svg width="30" height="34" viewBox="0 0 100 116" fill="none">
-        <path d="M50 4 L92 78 C97 87 90 100 78 100 H22 C10 100 3 87 8 78 Z" stroke="#E6CC7E" stroke-width="6" fill="none"/>
-        <path d="M50 34 L58 56 L50 50 L42 56 Z" fill="#E6CC7E"/>
-        <path d="M32 66 L50 58 L68 66 L68 82 L50 90 L32 82 Z" fill="#E6CC7E"/>
-      </svg>
-      <div class="brand-text">
-        <div class="name">AIS Al-Hidayah</div>
-        <div class="sub">Absensi Pelajaran</div>
-      </div>
+<div class="desktop-shell">
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <svg width="28" height="32" viewBox="0 0 100 116" fill="none">
+      <path d="M50 4 L92 78 C97 87 90 100 78 100 H22 C10 100 3 87 8 78 Z" stroke="#E6CC7E" stroke-width="6" fill="none"/>
+      <path d="M50 34 L58 56 L50 50 L42 56 Z" fill="#E6CC7E"/>
+      <path d="M32 66 L50 58 L68 66 L68 82 L50 90 L32 82 Z" fill="#E6CC7E"/>
+    </svg>
+    <div>
+      <div class="name">AIS Al-Hidayah</div>
+      <div class="sub">Absensi Pelajaran</div>
     </div>
-    <nav class="navlist" id="navlist">
+  </div>
+  <nav class="navlist" id="navlist">
       <a data-view="dashboard" data-roles="admin,guru,siswa" class="active">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
         Dashboard
@@ -517,38 +582,37 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
         Riwayat Saya
       </a>
-    </nav>
-    <div class="nav-meta">
-      <div class="user-chip">
-        <div class="u-info">
-          <div class="u-name" id="userChipName">-</div>
-          <div class="u-role" id="userChipRole">-</div>
-        </div>
-        <button class="logout-btn" onclick="logout()" title="Keluar">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-        </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="u-info">
+        <div class="u-name" id="userChipName">-</div>
+        <div class="u-role" id="userChipRole">-</div>
       </div>
-      <button class="conn-badge offline" id="connBadge" onclick="openSettingsModal()" style="margin-top:6px;">
-        <span class="conn-dot"></span> <span id="connBadgeText">Mode Lokal</span>
+      <button class="logout-btn" onclick="logout()" title="Keluar">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
       </button>
     </div>
+    <button class="conn-badge offline" id="connBadge" onclick="openSettingsModal()">
+      <span class="conn-dot"></span> <span id="connBadgeText">Mode Lokal</span>
+    </button>
   </div>
-</header>
+</aside>
 
-<!-- ================= HERO ================= -->
-<section class="hero star-pattern">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-eyebrow"><span class="star-icon">✦</span> AIS Al-Hidayah Boarding School</div>
-      <h1 id="pageTitle">Dashboard</h1>
-      <div class="today" id="todayLabel"></div>
-    </div>
-    <span class="pill-role">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.2 6.6H21l-5.4 4 2 6.6L12 15l-5.6 4.2 2-6.6L3 8.6h6.8z"/></svg>
-      7 Mata Pelajaran
-    </span>
+<!-- ================= MAIN AREA ================= -->
+<div class="main-wrap">
+
+<header class="topbar">
+  <div>
+    <div class="tb-eyebrow"><span class="star-icon">✦</span> AIS Al-Hidayah Boarding School</div>
+    <h1 id="pageTitle">Dashboard</h1>
+    <div class="today" id="todayLabel"></div>
   </div>
-</section>
+  <span class="pill-role" style="background:var(--navy);color:var(--gold-light);">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l2.2 6.6H21l-5.4 4 2 6.6L12 15l-5.6 4.2 2-6.6L3 8.6h6.8z"/></svg>
+    7 Mata Pelajaran
+  </span>
+</header>
 
 <!-- ================= MAIN ================= -->
 <main class="site-main">
@@ -936,6 +1000,9 @@ alter table siswa add column if not exists tgl_lahir date;</pre>
 <footer class="site-footer">
   Sistem Absensi Pelajaran &middot; <b>AIS Al-Hidayah Boarding School</b> &middot; dikelola oleh Musyrif
 </footer>
+
+</div><!-- /.main-wrap -->
+</div><!-- /.desktop-shell -->
 
 <div class="modal-overlay" id="settingsModal">
   <div class="modal-box">
