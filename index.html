@@ -562,6 +562,14 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
         Rekap &amp; Ekspor
       </a>
+      <a data-view="penilaian" data-roles="admin,guru">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Penilaian
+      </a>
+      <a data-view="rekap-nilai" data-roles="admin,guru">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+        Rekap Penilaian
+      </a>
       <a data-view="siswa" data-roles="admin,guru">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><path d="M17 8.5a3 3 0 100-6 3 3 0 000 6z"/><path d="M15.5 14c2.9.3 5 2.9 5 6"/></svg>
         Data Siswa
@@ -569,6 +577,18 @@
       <a data-view="kelas" data-roles="admin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
         Data Kelas
+      </a>
+      <a data-view="mapel" data-roles="admin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M9 7h6M9 11h6"/></svg>
+        Mata Pelajaran
+      </a>
+      <a data-view="periode" data-roles="admin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Periode/Tahun Ajaran
+      </a>
+      <a data-view="pengaturan-nilai" data-roles="admin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 010 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+        Pengaturan Penilaian
       </a>
       <a data-view="users" data-roles="admin">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
@@ -833,6 +853,61 @@
         </div>
       </div>
 
+      <!-- ============ PENILAIAN (input Guru) ============ -->
+      <div class="view" id="view-penilaian">
+        <div class="setup-note">
+          <b>Tahap pengembangan:</b> struktur menu &amp; database Penilaian sudah aktif. Input nilai per siswa (tabel yang bisa diedit langsung) akan dibangun di tahap berikutnya. Filter di bawah sudah bisa dicoba untuk memastikan Periode, Kelas, dan Mata Pelajaran termuat dengan benar.
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Pilih Periode, Kelas &amp; Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field" style="min-width:220px;"><label>Periode</label><select id="pnPeriode"></select></div>
+              <div class="field" style="min-width:200px;"><label>Kelas</label><select id="pnKelas"></select></div>
+              <div class="field" style="min-width:220px;"><label>Mata Pelajaran</label><select id="pnMapel"></select></div>
+              <div class="field"><label>Tanggal</label><input type="date" id="pnTanggal"></div>
+              <div class="field"><label>&nbsp;</label><button class="btn btn-navy" onclick="loadPenilaianTable()">Muat Siswa</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Penilaian Siswa</h3></div>
+          <div class="panel-body" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr><th class="num-cell">No</th><th>Nama Siswa</th><th>Kehadiran</th><th>Kerapian</th><th>Attitude</th><th>Keaktifan</th><th>Tugas</th><th>Project</th><th>Rata-rata</th></tr>
+              </thead>
+              <tbody id="penilaianTableBody"></tbody>
+            </table>
+            <div class="empty-state" id="penilaianEmpty">
+              <div class="t">Pilih Periode, Kelas &amp; Mapel</div>
+              Input nilai per kolom akan tersedia di tahap pengembangan selanjutnya.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ REKAP PENILAIAN ============ -->
+      <div class="view" id="view-rekap-nilai">
+        <div class="setup-note">
+          <b>Tahap pengembangan:</b> halaman ini akan menampilkan rekap perkembangan siswa (per siswa &amp; per kelas) setelah modul input Penilaian selesai dibangun.
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Filter Rekap Penilaian</h3></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field" style="min-width:220px;"><label>Periode</label><select id="rnPeriode"></select></div>
+              <div class="field" style="min-width:200px;"><label>Kelas</label><select id="rnKelas"><option value="">Semua</option></select></div>
+              <div class="field" style="min-width:220px;"><label>Mata Pelajaran</label><select id="rnMapel"><option value="">Semua</option></select></div>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state">
+          <div class="t">Belum ada data rekap penilaian</div>
+          Rekap akan muncul otomatis setelah Guru mulai mengisi Penilaian.
+        </div>
+      </div>
+
       <!-- ============ DATA SISWA ============ -->
       <div class="view" id="view-siswa">
         <div class="panel">
@@ -911,6 +986,81 @@
         </div>
       </div>
 
+      <!-- ============ MATA PELAJARAN (ADMIN) ============ -->
+      <div class="view" id="view-mapel">
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Tambah Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field" style="min-width:240px;"><label>Nama Mata Pelajaran</label><input type="text" id="mapelNamaInput" placeholder="cth. Matematika"></div>
+              <div class="field"><label>&nbsp;</label><button class="btn btn-primary" onclick="tambahMapel()">Tambah Mapel</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Daftar Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <ul class="list-simple" id="mapelListEl"></ul>
+            <div class="empty-state" id="mapelEmpty" style="display:none;">
+              <div class="t">Belum ada mata pelajaran</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PERIODE / TAHUN AJARAN (ADMIN) ============ -->
+      <div class="view" id="view-periode">
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Tambah Periode</h3></div>
+          <div class="panel-body">
+            <div class="field-row">
+              <div class="field" style="min-width:150px;"><label>Tahun Ajaran</label><input type="text" id="periodeTahunInput" placeholder="cth. 2026/2027"></div>
+              <div class="field" style="min-width:150px;">
+                <label>Semester</label>
+                <select id="periodeSemesterInput"><option>Ganjil</option><option>Genap</option></select>
+              </div>
+              <div class="field"><label>&nbsp;</label><button class="btn btn-primary" onclick="tambahPeriode()">Tambah Periode</button></div>
+            </div>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;">Semua nilai &amp; rekap akan dikelompokkan berdasarkan periode agar tidak tercampur antar semester/tahun ajaran.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Daftar Periode</h3></div>
+          <div class="panel-body">
+            <ul class="list-simple" id="periodeListEl"></ul>
+            <div class="empty-state" id="periodeEmpty" style="display:none;">
+              <div class="t">Belum ada periode</div>
+              Tambahkan periode aktif terlebih dahulu sebelum Guru mulai menilai.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PENGATURAN PENILAIAN / BOBOT (ADMIN) ============ -->
+      <div class="view" id="view-pengaturan-nilai">
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Bobot Nilai Akhir</h3></div>
+          <div class="panel-body">
+            <p style="font-size:12.5px;color:var(--muted);margin-top:0;">Atur persentase bobot setiap aspek. Total harus tepat 100%.</p>
+            <div class="field-row">
+              <div class="field" style="min-width:140px;"><label>Kehadiran (%)</label><input type="number" id="bobotKehadiran" min="0" max="100" oninput="hitungTotalBobot()"></div>
+              <div class="field" style="min-width:140px;"><label>Kerapian (%)</label><input type="number" id="bobotKerapian" min="0" max="100" oninput="hitungTotalBobot()"></div>
+              <div class="field" style="min-width:140px;"><label>Attitude (%)</label><input type="number" id="bobotAttitude" min="0" max="100" oninput="hitungTotalBobot()"></div>
+            </div>
+            <div class="field-row">
+              <div class="field" style="min-width:140px;"><label>Keaktifan (%)</label><input type="number" id="bobotKeaktifan" min="0" max="100" oninput="hitungTotalBobot()"></div>
+              <div class="field" style="min-width:140px;"><label>Tugas (%)</label><input type="number" id="bobotTugas" min="0" max="100" oninput="hitungTotalBobot()"></div>
+              <div class="field" style="min-width:140px;"><label>Project (%)</label><input type="number" id="bobotProject" min="0" max="100" oninput="hitungTotalBobot()"></div>
+            </div>
+            <div class="field-row" style="align-items:center;">
+              <div class="field"><label>Total</label><div id="bobotTotalLabel" style="font-weight:800;font-size:16px;padding-top:6px;">100%</div></div>
+              <div class="field"><label>&nbsp;</label><button class="btn btn-primary" onclick="simpanBobotNilai()">Simpan Bobot</button></div>
+            </div>
+            <div id="bobotWarning" style="display:none;color:var(--red);font-size:12.5px;font-weight:600;">Total bobot harus tepat 100% sebelum disimpan.</div>
+          </div>
+        </div>
+      </div>
+
       <!-- ============ KELOLA PENGGUNA (ADMIN) ============ -->
       <div class="view" id="view-users">
         <div class="setup-note">
@@ -954,6 +1104,18 @@ alter table siswa add column if not exists tgl_lahir date;</pre>
               <div class="t">Belum ada akun tambahan</div>
               Akun default <b>admin / admin123</b> selalu tersedia.
             </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3><span class="star-icon">✦</span> Penugasan Guru — Kelas &amp; Mata Pelajaran</h3></div>
+          <div class="panel-body">
+            <p style="font-size:12.5px;color:var(--muted);margin-top:0;">Tentukan kelas &amp; mapel yang menjadi tanggung jawab setiap Guru. Guru hanya akan melihat data sesuai penugasan ini.</p>
+            <div class="field-row">
+              <div class="field" style="min-width:220px;"><label>Pilih Guru</label><select id="penugasanGuruSelect" onchange="renderPenugasanGrid()"></select></div>
+            </div>
+            <div id="penugasanGridWrap" style="margin-top:10px;overflow-x:auto;"></div>
+            <div style="margin-top:12px;"><button class="btn btn-primary btn-sm" onclick="simpanPenugasanGuru()">Simpan Penugasan</button></div>
           </div>
         </div>
       </div>
@@ -1062,6 +1224,12 @@ const LS_USERS = 'ais_absensi_users';       // [{id, username, password, role, n
 const LS_SESSION = 'ais_absensi_session';   // {role, username|nis, nama, siswaId, kelasId}
 const DEFAULT_ADMIN = { id:'user_default_admin', username:'admin', password:'admin123', role:'admin', nama:'Administrator' };
 
+// ---- Modul Penilaian (TAHAP 2): key localStorage untuk mode lokal/offline ----
+const LS_MAPEL = 'ais_nilai_mapel';
+const LS_PERIODE = 'ais_nilai_periode';
+const LS_SETTINGS = 'ais_nilai_settings';
+const LS_PENUGASAN = 'ais_nilai_penugasan';
+
 // Kredensial default project Supabase — sudah ditanam supaya aplikasi
 // otomatis tersambung ke cloud di perangkat/browser mana pun tanpa
 // bergantung pada localStorage. Aman ditanam karena ini anon/publishable
@@ -1069,7 +1237,10 @@ const DEFAULT_ADMIN = { id:'user_default_admin', username:'admin', password:'adm
 const DEFAULT_SUPABASE_URL = 'https://dexsuchczwlqoxtftduo.supabase.co';
 const DEFAULT_SUPABASE_KEY = 'sb_publishable_RtiemtREOWAIk6yDzcqeYg_uY33O4S6';
 
-const MAPEL = [
+// Fallback/default (dipakai di mode lokal, atau sebelum tabel mata_pelajaran
+// dibuat di Supabase). Saat cloudMode aktif, MAPEL akan diisi ulang dari DB
+// oleh fetchMataPelajaran() supaya Admin bisa mengelolanya.
+let MAPEL = [
   { id:'bisdig', nama:'Bisnis Digital' },
   { id:'rpl', nama:'Rekayasa Perangkat Lunak (RPL)' },
   { id:'keperawatan', nama:'Keperawatan' },
@@ -1078,6 +1249,11 @@ const MAPEL = [
   { id:'arab', nama:'Bahasa Arab' },
   { id:'qurdis', nama:"Qur'an Hadits (Qurdis)" },
 ];
+
+/* ================= MODUL PENILAIAN — STATE (TAHAP 2) ================= */
+let periodeList = [];        // [{id, tahunAjaran, semester, nama, isActive}]
+let guruPenugasanList = [];  // [{id, guruId, kelasId, mapelId}]
+let bobotSettings = { bobotKehadiran:20, bobotKerapian:15, bobotAttitude:20, bobotKeaktifan:15, bobotTugas:15, bobotProject:15 };
 
 const STATUS_LIST = ['Hadir','Sakit','Izin','Alpa'];
 const STATUS_COLORS = { Hadir:'var(--emerald)', Sakit:'var(--blue)', Izin:'var(--gold)', Alpa:'var(--red)' };
@@ -1532,8 +1708,45 @@ async function fetchRecords(){
   return loadLS(LS_RECORDS, []);
 }
 
+/* ---- Modul Penilaian: fetch functions (TAHAP 2) ---- */
+async function fetchMataPelajaran(){
+  if(cloudMode){
+    const { data, error } = await sb.from('mata_pelajaran').select('*').order('urutan');
+    if(!error && data && data.length){ return data.map(m=>({ id:m.id, nama:m.nama })); }
+    return MAPEL; // tabel belum dibuat/kosong -> pakai fallback, jangan sampai mapel hilang
+  }
+  return loadLS(LS_MAPEL, MAPEL);
+}
+async function fetchPeriode(){
+  if(cloudMode){
+    const { data, error } = await sb.from('assessment_periods').select('*').order('tahun_ajaran',{ascending:false});
+    if(error) return periodeList;
+    return data.map(p=>({ id:p.id, tahunAjaran:p.tahun_ajaran, semester:p.semester, nama:p.nama, isActive:p.is_active }));
+  }
+  return loadLS(LS_PERIODE, []);
+}
+async function fetchGuruPenugasan(){
+  if(cloudMode){
+    const { data, error } = await sb.from('guru_penugasan').select('*');
+    if(error) return guruPenugasanList;
+    return data.map(g=>({ id:g.id, guruId:g.guru_id, kelasId:g.kelas_id, mapelId:g.mapel_id }));
+  }
+  return loadLS(LS_PENUGASAN, []);
+}
+async function fetchBobotSettings(){
+  if(cloudMode){
+    const { data, error } = await sb.from('assessment_settings').select('*').eq('id','default').maybeSingle();
+    if(error || !data) return bobotSettings;
+    return { bobotKehadiran:data.bobot_kehadiran, bobotKerapian:data.bobot_kerapian, bobotAttitude:data.bobot_attitude, bobotKeaktifan:data.bobot_keaktifan, bobotTugas:data.bobot_tugas, bobotProject:data.bobot_project };
+  }
+  return loadLS(LS_SETTINGS, bobotSettings);
+}
+
 async function loadAllData(){
-  [kelasList, siswaMap, records, usersList] = await Promise.all([fetchKelas(), fetchSiswa(), fetchRecords(), fetchUsers()]);
+  [kelasList, siswaMap, records, usersList, MAPEL, periodeList, guruPenugasanList, bobotSettings] = await Promise.all([
+    fetchKelas(), fetchSiswa(), fetchRecords(), fetchUsers(),
+    fetchMataPelajaran(), fetchPeriode(), fetchGuruPenugasan(), fetchBobotSettings()
+  ]);
   refreshCurrentView();
 }
 
@@ -1541,15 +1754,21 @@ function refreshCurrentView(){
   populateMapelSelects();
   populateKelasSelects();
   populateFilterSelects();
+  populatePenilaianSelects();
   const activeEl = document.querySelector('.navlist a.active');
   const view = activeEl ? activeEl.dataset.view : 'dashboard';
   if(view==='dashboard') renderDashboard();
   if(view==='rekap') renderRekap();
   if(view==='siswa') renderSiswaList();
   if(view==='kelas') renderKelasList();
-  if(view==='users') renderUsersList();
+  if(view==='users'){ renderUsersList(); populatePenugasanGuruSelect(); }
   if(view==='qrsiswa') renderMyQr();
   if(view==='riwayat') renderMyRiwayat();
+  if(view==='mapel') renderMapelList();
+  if(view==='periode') renderPeriodeList();
+  if(view==='pengaturan-nilai') loadBobotIntoForm();
+  if(view==='penilaian') { /* menunggu Guru klik "Muat Siswa" — lihat TAHAP 3 */ }
+  if(view==='rekap-nilai') { /* placeholder, lihat TAHAP berikutnya */ }
 }
 
 /* ================= NAV ================= */
@@ -1563,7 +1782,7 @@ document.getElementById('navlist').addEventListener('click', async (e)=>{
   const view = a.dataset.view;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
-  const titles = { dashboard:'Dashboard', absensi:'Ambil Absensi', scan:'Scan QR Absensi', rekap:'Rekap & Ekspor', siswa:'Data Siswa', kelas:'Data Kelas', users:'Kelola Pengguna', qrsiswa:'QR Saya', riwayat:'Riwayat Absensi Saya' };
+  const titles = { dashboard:'Dashboard', absensi:'Ambil Absensi', scan:'Scan QR Absensi', rekap:'Rekap & Ekspor', siswa:'Data Siswa', kelas:'Data Kelas', users:'Kelola Pengguna', qrsiswa:'QR Saya', riwayat:'Riwayat Absensi Saya', penilaian:'Penilaian', 'rekap-nilai':'Rekap Penilaian', mapel:'Mata Pelajaran', periode:'Periode/Tahun Ajaran', 'pengaturan-nilai':'Pengaturan Penilaian' };
   document.getElementById('pageTitle').textContent = titles[view];
   if(cloudMode){ await loadAllData(); } else { refreshCurrentView(); }
 });
@@ -2021,6 +2240,268 @@ async function hapusKelas(kelasId){
   populateKelasSelects();
   populateFilterSelects();
   toast('Kelas dihapus.');
+}
+
+/* ================= MODUL PENILAIAN (TAHAP 2) ================= */
+
+/* ---- Mata Pelajaran (Admin) ---- */
+function renderMapelList(){
+  const el = document.getElementById('mapelListEl');
+  const empty = document.getElementById('mapelEmpty');
+  if(!MAPEL.length){ el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  el.innerHTML = MAPEL.map(m=>`
+    <li><span>${m.nama}</span>
+      <span class="li-actions"><button class="btn btn-danger-outline btn-sm" onclick="hapusMapel('${m.id}')">Hapus</button></span>
+    </li>`).join('');
+}
+async function tambahMapel(){
+  const nama = document.getElementById('mapelNamaInput').value.trim();
+  if(!nama){ toast('Nama mata pelajaran wajib diisi.', true); return; }
+  const id = uid('mapel');
+  const urutan = MAPEL.length + 1;
+  if(cloudMode){
+    const { error } = await sb.from('mata_pelajaran').insert({ id, nama, urutan });
+    if(error){ toast('Gagal menambah mapel: '+error.message+' (pastikan tabel mata_pelajaran sudah dibuat, lihat SQL TAHAP 2)', true); return; }
+  }
+  MAPEL.push({ id, nama });
+  if(!cloudMode) saveLS(LS_MAPEL, MAPEL);
+  document.getElementById('mapelNamaInput').value='';
+  renderMapelList();
+  populateMapelSelects();
+  populateFilterSelects();
+  populatePenilaianSelects();
+  toast('Mata pelajaran ditambahkan ✓');
+}
+async function hapusMapel(mapelId){
+  if(!confirm('Menghapus mata pelajaran ini akan ikut menghapus seluruh data absensi & penilaian yang terkait. Lanjutkan?')) return;
+  if(cloudMode){
+    const { error } = await sb.from('mata_pelajaran').delete().eq('id', mapelId);
+    if(error){ toast('Gagal menghapus mapel: '+error.message, true); return; }
+  }
+  MAPEL = MAPEL.filter(m=>m.id!==mapelId);
+  if(!cloudMode) saveLS(LS_MAPEL, MAPEL);
+  renderMapelList();
+  populateMapelSelects();
+  populateFilterSelects();
+  populatePenilaianSelects();
+  toast('Mata pelajaran dihapus.');
+}
+
+/* ---- Periode / Tahun Ajaran (Admin) ---- */
+function renderPeriodeList(){
+  const el = document.getElementById('periodeListEl');
+  const empty = document.getElementById('periodeEmpty');
+  if(!periodeList.length){ el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  el.innerHTML = periodeList.map(p=>`
+    <li><span>${p.nama} ${p.isActive?'<span class="mapel-chip" style="margin-left:8px;">Aktif</span>':''}</span>
+      <span class="li-actions">
+        ${p.isActive?'':`<button class="btn btn-outline btn-sm" onclick="setPeriodeAktif('${p.id}')">Jadikan Aktif</button>`}
+        <button class="btn btn-danger-outline btn-sm" onclick="hapusPeriode('${p.id}')">Hapus</button>
+      </span>
+    </li>`).join('');
+}
+async function tambahPeriode(){
+  const tahun = document.getElementById('periodeTahunInput').value.trim();
+  const semester = document.getElementById('periodeSemesterInput').value;
+  if(!tahun){ toast('Tahun ajaran wajib diisi, cth. 2026/2027.', true); return; }
+  const nama = `Semester ${semester} ${tahun}`;
+  const id = uid('periode');
+  const isActive = periodeList.length===0; // periode pertama otomatis aktif
+  if(cloudMode){
+    const { error } = await sb.from('assessment_periods').insert({ id, tahun_ajaran:tahun, semester, nama, is_active:isActive });
+    if(error){ toast('Gagal menambah periode: '+error.message+' (pastikan tabel assessment_periods sudah dibuat)', true); return; }
+  }
+  periodeList.push({ id, tahunAjaran:tahun, semester, nama, isActive });
+  if(!cloudMode) saveLS(LS_PERIODE, periodeList);
+  document.getElementById('periodeTahunInput').value='';
+  renderPeriodeList();
+  populatePenilaianSelects();
+  toast('Periode ditambahkan ✓');
+}
+async function setPeriodeAktif(periodeId){
+  if(cloudMode){
+    const { error: e1 } = await sb.from('assessment_periods').update({ is_active:false }).neq('id','__none__');
+    const { error: e2 } = await sb.from('assessment_periods').update({ is_active:true }).eq('id', periodeId);
+    if(e1||e2){ toast('Gagal mengubah periode aktif.', true); return; }
+  }
+  periodeList = periodeList.map(p=>({ ...p, isActive: p.id===periodeId }));
+  if(!cloudMode) saveLS(LS_PERIODE, periodeList);
+  renderPeriodeList();
+  populatePenilaianSelects();
+  toast('Periode aktif diperbarui ✓');
+}
+async function hapusPeriode(periodeId){
+  if(!confirm('Menghapus periode akan ikut menghapus seluruh data penilaian, tugas, dan project pada periode ini. Lanjutkan?')) return;
+  if(cloudMode){
+    const { error } = await sb.from('assessment_periods').delete().eq('id', periodeId);
+    if(error){ toast('Gagal menghapus periode: '+error.message, true); return; }
+  }
+  periodeList = periodeList.filter(p=>p.id!==periodeId);
+  if(!cloudMode) saveLS(LS_PERIODE, periodeList);
+  renderPeriodeList();
+  populatePenilaianSelects();
+  toast('Periode dihapus.');
+}
+
+/* ---- Bobot Nilai Akhir (Admin) ---- */
+function loadBobotIntoForm(){
+  document.getElementById('bobotKehadiran').value = bobotSettings.bobotKehadiran;
+  document.getElementById('bobotKerapian').value = bobotSettings.bobotKerapian;
+  document.getElementById('bobotAttitude').value = bobotSettings.bobotAttitude;
+  document.getElementById('bobotKeaktifan').value = bobotSettings.bobotKeaktifan;
+  document.getElementById('bobotTugas').value = bobotSettings.bobotTugas;
+  document.getElementById('bobotProject').value = bobotSettings.bobotProject;
+  hitungTotalBobot();
+}
+function hitungTotalBobot(){
+  const ids = ['bobotKehadiran','bobotKerapian','bobotAttitude','bobotKeaktifan','bobotTugas','bobotProject'];
+  const total = ids.reduce((sum,id)=> sum + (parseFloat(document.getElementById(id).value)||0), 0);
+  const label = document.getElementById('bobotTotalLabel');
+  label.textContent = total + '%';
+  label.style.color = total===100 ? 'var(--emerald)' : 'var(--red)';
+  document.getElementById('bobotWarning').style.display = total===100 ? 'none' : 'block';
+  return total;
+}
+async function simpanBobotNilai(){
+  const total = hitungTotalBobot();
+  if(total!==100){ toast('Total bobot harus tepat 100% sebelum disimpan.', true); return; }
+  const next = {
+    bobotKehadiran: parseFloat(document.getElementById('bobotKehadiran').value)||0,
+    bobotKerapian: parseFloat(document.getElementById('bobotKerapian').value)||0,
+    bobotAttitude: parseFloat(document.getElementById('bobotAttitude').value)||0,
+    bobotKeaktifan: parseFloat(document.getElementById('bobotKeaktifan').value)||0,
+    bobotTugas: parseFloat(document.getElementById('bobotTugas').value)||0,
+    bobotProject: parseFloat(document.getElementById('bobotProject').value)||0,
+  };
+  if(cloudMode){
+    const { error } = await sb.from('assessment_settings').update({
+      bobot_kehadiran:next.bobotKehadiran, bobot_kerapian:next.bobotKerapian, bobot_attitude:next.bobotAttitude,
+      bobot_keaktifan:next.bobotKeaktifan, bobot_tugas:next.bobotTugas, bobot_project:next.bobotProject
+    }).eq('id','default');
+    if(error){ toast('Gagal menyimpan bobot: '+error.message+' (pastikan tabel assessment_settings sudah dibuat)', true); return; }
+  }
+  bobotSettings = next;
+  if(!cloudMode) saveLS(LS_SETTINGS, bobotSettings);
+  toast('Bobot nilai disimpan ✓');
+}
+
+/* ---- Penugasan Guru -> Kelas + Mapel (Admin) ---- */
+function daftarGuru(){ return usersList.filter(u=>u.role==='guru'); }
+function populatePenugasanGuruSelect(){
+  const sel = document.getElementById('penugasanGuruSelect');
+  const prev = sel.value;
+  const guruList = daftarGuru();
+  sel.innerHTML = guruList.length
+    ? guruList.map(g=>`<option value="${g.id}">${g.nama} (${g.username})</option>`).join('')
+    : `<option value="">- Belum ada akun Guru -</option>`;
+  if(guruList.find(g=>g.id===prev)) sel.value = prev;
+  renderPenugasanGrid();
+}
+function renderPenugasanGrid(){
+  const wrap = document.getElementById('penugasanGridWrap');
+  const guruId = document.getElementById('penugasanGuruSelect').value;
+  if(!guruId || !kelasList.length || !MAPEL.length){
+    wrap.innerHTML = `<p style="font-size:12.5px;color:var(--muted);">Pilih Guru, dan pastikan sudah ada Kelas &amp; Mata Pelajaran.</p>`;
+    return;
+  }
+  const assigned = new Set(guruPenugasanList.filter(p=>p.guruId===guruId).map(p=>p.kelasId+'|'+p.mapelId));
+  wrap.innerHTML = `
+    <table>
+      <thead><tr><th>Kelas</th>${MAPEL.map(m=>`<th style="text-align:center;">${m.nama}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${kelasList.map(k=>`
+          <tr><td>${k.nama}</td>
+            ${MAPEL.map(m=>`<td style="text-align:center;"><input type="checkbox" data-kelas="${k.id}" data-mapel="${m.id}" class="penugasan-cb" ${assigned.has(k.id+'|'+m.id)?'checked':''}></td>`).join('')}
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+async function simpanPenugasanGuru(){
+  const guruId = document.getElementById('penugasanGuruSelect').value;
+  if(!guruId){ toast('Pilih Guru terlebih dahulu.', true); return; }
+  const checked = Array.from(document.querySelectorAll('.penugasan-cb')).map(cb=>({ kelasId:cb.dataset.kelas, mapelId:cb.dataset.mapel, on:cb.checked }));
+  const toAdd = checked.filter(c=>c.on).map(c=>({ id: uid('pnug'), guruId, kelasId:c.kelasId, mapelId:c.mapelId }));
+  const keepPairs = new Set(toAdd.map(c=>c.kelasId+'|'+c.mapelId));
+
+  if(cloudMode){
+    const { error: delErr } = await sb.from('guru_penugasan').delete().eq('guru_id', guruId);
+    if(delErr){ toast('Gagal menyimpan penugasan: '+delErr.message+' (pastikan tabel guru_penugasan sudah dibuat)', true); return; }
+    if(toAdd.length){
+      const { error: insErr } = await sb.from('guru_penugasan').insert(toAdd.map(t=>({ id:t.id, guru_id:t.guruId, kelas_id:t.kelasId, mapel_id:t.mapelId })));
+      if(insErr){ toast('Gagal menyimpan penugasan: '+insErr.message, true); return; }
+    }
+  }
+  guruPenugasanList = guruPenugasanList.filter(p=>p.guruId!==guruId).concat(toAdd);
+  if(!cloudMode) saveLS(LS_PENUGASAN, guruPenugasanList);
+  toast('Penugasan Guru disimpan ✓');
+}
+
+/* ---- Selects untuk halaman Penilaian & Rekap Penilaian ---- */
+function kelasMapelUntukGuru(guruId){
+  // Guru tanpa penugasan sama sekali -> sementara tampilkan semua (supaya tidak terkunci
+  // sebelum Admin selesai mengatur penugasan). Begitu ada minimal 1 penugasan, dibatasi.
+  const rows = guruPenugasanList.filter(p=>p.guruId===guruId);
+  if(!rows.length) return null; // null = tidak dibatasi
+  return rows;
+}
+function populatePenilaianSelects(){
+  const periodeOpts = periodeList.length
+    ? periodeList.map(p=>`<option value="${p.id}" ${p.isActive?'selected':''}>${p.nama}${p.isActive?' (Aktif)':''}</option>`).join('')
+    : `<option value="">- Belum ada periode -</option>`;
+  ['pnPeriode','rnPeriode'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML = periodeOpts; });
+
+  let allowedKelas = kelasList, allowedMapel = MAPEL;
+  if(session && session.role==='guru'){
+    const rows = kelasMapelUntukGuru(findGuruIdBySession());
+    if(rows){
+      const kIds = new Set(rows.map(r=>r.kelasId));
+      const mIds = new Set(rows.map(r=>r.mapelId));
+      allowedKelas = kelasList.filter(k=>kIds.has(k.id));
+      allowedMapel = MAPEL.filter(m=>mIds.has(m.id));
+    }
+  }
+  const kelasOpts = allowedKelas.length ? allowedKelas.map(k=>`<option value="${k.id}">${k.nama}</option>`).join('') : `<option value="">- Tidak ada kelas -</option>`;
+  const mapelOpts = allowedMapel.length ? allowedMapel.map(m=>`<option value="${m.id}">${m.nama}</option>`).join('') : `<option value="">- Tidak ada mapel -</option>`;
+  const pnKelas = document.getElementById('pnKelas'); if(pnKelas) pnKelas.innerHTML = kelasOpts;
+  const pnMapel = document.getElementById('pnMapel'); if(pnMapel) pnMapel.innerHTML = mapelOpts;
+  const rnKelas = document.getElementById('rnKelas'); if(rnKelas) rnKelas.innerHTML = '<option value="">Semua</option>' + kelasOpts;
+  const rnMapel = document.getElementById('rnMapel'); if(rnMapel) rnMapel.innerHTML = '<option value="">Semua</option>' + mapelOpts;
+  const pnTanggal = document.getElementById('pnTanggal');
+  if(pnTanggal && !pnTanggal.value) pnTanggal.value = new Date().toISOString().slice(0,10);
+}
+function findGuruIdBySession(){
+  if(!session || session.role!=='guru') return null;
+  const u = usersList.find(u=>u.username===session.username);
+  return u ? u.id : null;
+}
+
+/* ---- Penilaian: muat daftar siswa (skeleton TAHAP 2, input nilai di TAHAP 3) ---- */
+function loadPenilaianTable(){
+  const kelasId = document.getElementById('pnKelas').value;
+  const tbody = document.getElementById('penilaianTableBody');
+  const empty = document.getElementById('penilaianEmpty');
+  const list = siswaMap[kelasId] || [];
+  if(!kelasId || !list.length){
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = list.map((s,i)=>`
+    <tr>
+      <td class="num-cell">${i+1}</td>
+      <td>${s.nama}</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+      <td style="text-align:center;color:var(--muted);">—</td>
+    </tr>`).join('');
+  toast('Struktur tabel siap. Input nilai per kolom aktif di TAHAP 3.');
 }
 
 /* ================= INIT ================= */
